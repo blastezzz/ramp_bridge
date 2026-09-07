@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>Stake $RAMP — RAMP Protocol</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="atmosphere" aria-hidden="true"></div>
+
+<div class="modal-overlay" id="walletModal" hidden>
+  <div class="term modal-panel" role="dialog" aria-modal="true" aria-labelledby="walletModalTitle">
+    <div class="term-bar">
+      <span class="term-dot" style="background:var(--dot-red);"></span>
+      <span class="term-dot" style="background:var(--dot-amber);"></span>
+      <span class="term-dot" style="background:var(--dot-green);"></span>
+      <span class="term-title" id="walletModalTitle">connect-wallet.sh</span>
+      <button class="modal-close" id="walletModalClose" aria-label="Close" style="margin-left:auto;">✕</button>
+    </div>
+    <div class="term-body">
+      <button class="wallet-row" data-wallet="metamask">
+        <span class="wallet-row-main">
+          <span class="wallet-swatch" style="background:#f6851b;">MM</span>
+          <span>
+            <span class="wallet-name" style="display:block;">MetaMask</span>
+            <span class="wallet-sub">EVM · ETH / BNB</span>
+          </span>
+        </span>
+        <span class="wallet-status" data-status="metamask">checking…</span>
+      </button>
+      <button class="wallet-row" data-wallet="rabby">
+        <span class="wallet-row-main">
+          <span class="wallet-swatch" style="background:#7a7ffc;">RB</span>
+          <span>
+            <span class="wallet-name" style="display:block;">Rabby Wallet</span>
+            <span class="wallet-sub">EVM · ETH / BNB</span>
+          </span>
+        </span>
+        <span class="wallet-status" data-status="rabby">checking…</span>
+      </button>
+      <button class="wallet-row" data-wallet="phantom">
+        <span class="wallet-row-main">
+          <span class="wallet-swatch" style="background:#ab9ff2;">PH</span>
+          <span>
+            <span class="wallet-name" style="display:block;">Phantom</span>
+            <span class="wallet-sub">Solana</span>
+          </span>
+        </span>
+        <span class="wallet-status" data-status="phantom">checking…</span>
+      </button>
+    </div>
+    <div class="modal-foot">Connecting only shares your public address for a quote. RAMP requests a signature only when you press Bridge on the next screen — always review the transaction in your wallet before approving it.</div>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="wrap nav-row">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <path d="M31.6,20.1 H17.8 V79.9 H31.6" fill="none" stroke="#9c7a1f" stroke-width="10.9" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M68.4,20.1 H82.2 V79.9 H68.4" fill="none" stroke="#ffb020" stroke-width="10.9" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M36.2,50 H56.9 M47.7,36.2 L63.8,50 L47.7,63.8" fill="none" stroke="#ffb020" stroke-width="10.9" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      RAMP<span class="cursor-blink">_</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="bridge.html" data-nav="bridge">bridge</a></li>
+      <li><a href="stake.html" data-nav="stake">stake</a></li>
+      <li><a href="index.html#security" data-nav="security">security</a></li>
+      <li><a href="index.html#faq" data-nav="faq">faq</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a class="btn btn-ghost btn-sm" href="index.html#how">how it works</a>
+      <button class="btn btn-primary btn-sm" id="navWalletBtn" data-open-wallet>connect wallet</button>
+    </div>
+  </div>
+</header>
+<main>
+  <section id="stake">
+    <div class="wrap">
+
+      <div class="stake-head reveal">
+        <span class="eyebrow">$RAMP staking</span>
+        <h2>Stake $RAMP → pay less.</h2>
+        <p class="body">Routing fees scale down with the amount of $RAMP staked to your wallet. Staked $RAMP also weights your transfers toward priority execution when routes are congested.</p>
+      </div>
+
+      <div class="stake-stats">
+          <div class="stake-stat">
+            <div class="n">0.30%<span class="sub"> → 0.05%</span></div>
+            <div class="l">fee range, no stake to gold</div>
+          </div>
+          <div class="stake-stat">
+            <div class="n">4</div>
+            <div class="l">networks routed</div>
+          </div>
+          <div class="stake-stat">
+            <div class="n">~38s</div>
+            <div class="l">median route time</div>
+          </div>
+        </div>
+
+      <div class="stake-grid">
+        <div class="term stake-form reveal">
+          <div class="term-bar">
+            <span class="term-dot" style="background:var(--dot-red);"></span>
+            <span class="term-dot" style="background:var(--dot-amber);"></span>
+            <span class="term-dot" style="background:var(--dot-green);"></span>
+            <span class="term-title">stake.sh</span>
+          </div>
+          <div class="term-body">
+            <div class="connected-box" id="stakeConnectedBox" hidden>
+              <div class="who">
+                <span class="wallet-chip" style="cursor:default; padding:0; border:none; background:none;">
+                  <span class="net-dot"></span>
+                  <span id="stakeConnectedAddr" class="addr">0x0000…0000</span>
+                </span>
+              </div>
+              <span class="net" id="stakeConnectedNet">—</span>
+            </div>
+
+            <div class="stake-input-row">
+              <input type="number" min="0" step="1" placeholder="0" id="stakeAmountInput" inputmode="decimal" aria-label="$RAMP amount to stake">
+              <button class="stake-max" id="stakeMaxBtn" type="button">MAX</button>
+              <span style="color:var(--text-dim); font-size:0.82rem;">$RAMP</span>
+            </div>
+            <div class="stake-balance-row">
+              <span>wallet balance</span>
+              <span id="stakeBalanceValue">connect wallet to view</span>
+            </div>
+
+            <div class="tier-preview" id="tierPreview">
+              <div class="tier-chip" data-tier="0">no stake<span class="fee">0.30%</span></div>
+              <div class="tier-chip" data-tier="1000">bronze<span class="fee">0.20%</span></div>
+              <div class="tier-chip" data-tier="10000">silver<span class="fee">0.12%</span></div>
+              <div class="tier-chip" data-tier="50000">gold<span class="fee">0.05%</span></div>
+            </div>
+
+            <button class="btn btn-primary btn-full" id="stakeActionBtn" data-open-wallet>connect wallet to stake</button>
+            <p class="pending-note" id="stakePendingNote" hidden><span class="tag">// pending</span> staking is disabled until the $RAMP staking contract address is verified live.</p>
+          </div>
+        </div>
+
+        <div class="term fee-card reveal">
+        <div class="term-bar">
+          <span class="term-dot" style="background:var(--dot-red);"></span>
+          <span class="term-dot" style="background:var(--dot-amber);"></span>
+          <span class="term-dot" style="background:var(--dot-green);"></span>
+          <span class="term-title">fee-schedule.csv</span>
+        </div>
+        <div class="table-scroll">
+        <table class="fee-table">
+          <thead>
+            <tr>
+              <th>tier</th>
+              <th class="num">$RAMP staked</th>
+              <th class="num">routing fee</th>
+              <th class="num">per $10,000</th>
+              <th class="num">priority</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-tier-row="0">
+              <td class="tier-name"><span class="tier-swatch" style="background:#6d6d64;"></span>no stake</td>
+              <td class="num">0</td>
+              <td class="num fee-cell"><span class="fee-val">0.30%</span><span class="fee-bar" style="width:100%;"></span></td>
+              <td class="num">$30.00</td>
+              <td class="num"><span class="prio prio-std">standard</span></td>
+            </tr>
+            <tr data-tier-row="1000">
+              <td class="tier-name"><span class="tier-swatch" style="background:#b08d57;"></span>bronze</td>
+              <td class="num">1,000</td>
+              <td class="num fee-cell"><span class="fee-val">0.20%</span><span class="fee-bar" style="width:67%;"></span></td>
+              <td class="num">$20.00</td>
+              <td class="num"><span class="prio prio-std">standard</span></td>
+            </tr>
+            <tr data-tier-row="10000">
+              <td class="tier-name"><span class="tier-swatch" style="background:#c9ccd4;"></span>silver</td>
+              <td class="num">10,000</td>
+              <td class="num fee-cell"><span class="fee-val">0.12%</span><span class="fee-bar" style="width:40%;"></span></td>
+              <td class="num">$12.00</td>
+              <td class="num"><span class="prio prio-high">high</span></td>
+            </tr>
+            <tr data-tier-row="50000">
+              <td class="tier-name"><span class="tier-swatch" style="background:#ffb020;"></span>gold</td>
+              <td class="num">50,000</td>
+              <td class="num fee-cell"><span class="fee-val">0.05%</span><span class="fee-bar" style="width:17%;"></span></td>
+              <td class="num">$5.00</td>
+              <td class="num"><span class="prio prio-top">highest</span></td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+        <div class="fee-foot">
+          <span><span class="tag">// base</span> 0.30% with nothing staked</span>
+          <span class="fee-foot-save">gold routes cost <strong>83% less</strong></span>
+        </div>
+      </div>
+      </div>
+
+      <div class="contract-center">
+        <div class="contract-box reveal">
+          <div class="contract-box-top">
+            <span class="contract-label">$RAMP contract</span>
+            <span class="contract-badge" id="contractBadge">example</span>
+          </div>
+          <code id="contractAddress">—</code>
+          <div class="contract-actions">
+            <button class="chip-btn" id="contractCopyBtn" type="button">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+              <span class="chip-label">copy</span>
+            </button>
+            <a class="chip-btn" id="contractExplorerLink" href="#" target="_blank" rel="noopener">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+              explorer
+            </a>
+          </div>
+          <p class="contract-note" id="contractNote"></p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">
+          <span class="brand-mark">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <path d="M31.6,20.1 H17.8 V79.9 H31.6" fill="none" stroke="#9c7a1f" stroke-width="10.9" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M68.4,20.1 H82.2 V79.9 H68.4" fill="none" stroke="#ffb020" stroke-width="10.9" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M36.2,50 H56.9 M47.7,36.2 L63.8,50 L47.7,63.8" fill="none" stroke="#ffb020" stroke-width="10.9" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+          RAMP<span class="cursor-blink">_</span>
+        </a>
+        <p>The RH Asset Migration Protocol — one-tap routing into Robinhood Chain from Solana, Ethereum and BNB Chain. Independent and community-built.</p>
+      </div>
+      <div class="footer-col">
+        <h4>protocol</h4>
+        <ul>
+          <li><a href="index.html#how">how it works</a></li>
+          <li><a href="bridge.html">supported networks</a></li>
+          <li><a href="index.html#security">security</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>$ramp</h4>
+        <ul>
+          <li><a href="stake.html">staking tiers</a></li>
+          <li><a href="index.html#faq">faq</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>community</h4>
+        <ul>
+          <li><a href="https://x.com/ramp_bridge">x / twitter</a></li>
+          <li><a href="#">github</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 RAMP Protocol. Not affiliated with Robinhood Markets, Inc.</p>
+      <p>built for SOL · ETH · BNB · RH</p>
+    </div>
+  </div>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>

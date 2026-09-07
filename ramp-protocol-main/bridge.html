@@ -1,0 +1,215 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>Bridge — RAMP Protocol</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="atmosphere" aria-hidden="true"></div>
+
+<div class="modal-overlay" id="walletModal" hidden>
+  <div class="term modal-panel" role="dialog" aria-modal="true" aria-labelledby="walletModalTitle">
+    <div class="term-bar">
+      <span class="term-dot" style="background:var(--dot-red);"></span>
+      <span class="term-dot" style="background:var(--dot-amber);"></span>
+      <span class="term-dot" style="background:var(--dot-green);"></span>
+      <span class="term-title" id="walletModalTitle">connect-wallet.sh</span>
+      <button class="modal-close" id="walletModalClose" aria-label="Close" style="margin-left:auto;">✕</button>
+    </div>
+    <div class="term-body">
+      <button class="wallet-row" data-wallet="metamask">
+        <span class="wallet-row-main">
+          <span class="wallet-swatch" style="background:#f6851b;">MM</span>
+          <span>
+            <span class="wallet-name" style="display:block;">MetaMask</span>
+            <span class="wallet-sub">EVM · ETH / BNB</span>
+          </span>
+        </span>
+        <span class="wallet-status" data-status="metamask">checking…</span>
+      </button>
+      <button class="wallet-row" data-wallet="rabby">
+        <span class="wallet-row-main">
+          <span class="wallet-swatch" style="background:#7a7ffc;">RB</span>
+          <span>
+            <span class="wallet-name" style="display:block;">Rabby Wallet</span>
+            <span class="wallet-sub">EVM · ETH / BNB</span>
+          </span>
+        </span>
+        <span class="wallet-status" data-status="rabby">checking…</span>
+      </button>
+      <button class="wallet-row" data-wallet="phantom">
+        <span class="wallet-row-main">
+          <span class="wallet-swatch" style="background:#ab9ff2;">PH</span>
+          <span>
+            <span class="wallet-name" style="display:block;">Phantom</span>
+            <span class="wallet-sub">Solana</span>
+          </span>
+        </span>
+        <span class="wallet-status" data-status="phantom">checking…</span>
+      </button>
+    </div>
+    <div class="modal-foot">Connecting only shares your public address for a quote. RAMP requests a signature only when you press Bridge on the next screen — always review the transaction in your wallet before approving it.</div>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="wrap nav-row">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <path d="M31.6,20.1 H17.8 V79.9 H31.6" fill="none" stroke="#9c7a1f" stroke-width="10.9" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M68.4,20.1 H82.2 V79.9 H68.4" fill="none" stroke="#ffb020" stroke-width="10.9" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M36.2,50 H56.9 M47.7,36.2 L63.8,50 L47.7,63.8" fill="none" stroke="#ffb020" stroke-width="10.9" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      RAMP<span class="cursor-blink">_</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="bridge.html" data-nav="bridge">bridge</a></li>
+      <li><a href="stake.html" data-nav="stake">stake</a></li>
+      <li><a href="index.html#security" data-nav="security">security</a></li>
+      <li><a href="index.html#faq" data-nav="faq">faq</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a class="btn btn-ghost btn-sm" href="index.html#how">how it works</a>
+      <button class="btn btn-primary btn-sm" id="navWalletBtn" data-open-wallet>connect wallet</button>
+    </div>
+  </div>
+</header>
+<main>
+  <section id="route-launch" style="padding:88px 0;">
+    <div class="wrap" style="max-width:520px;">
+      <div class="section-head reveal" style="text-align:center; margin-left:auto; margin-right:auto;">
+        <span class="eyebrow" style="justify-content:center;">launch app</span>
+        <h2>Bridge in one tap.</h2>
+        <p style="margin-left:auto; margin-right:auto;">Connect a wallet to get a live quote from relay.link and send it.</p>
+      </div>
+
+      <div id="route" class="term route-term">
+        <div class="term-bar">
+          <span class="term-dot" style="background:var(--dot-red);"></span>
+          <span class="term-dot" style="background:var(--dot-amber);"></span>
+          <span class="term-dot" style="background:var(--dot-green);"></span>
+          <span class="term-title">ramp — router</span>
+        </div>
+        <div class="term-body">
+          <div class="connected-box" id="routeConnectedBox" hidden>
+            <div class="who">
+              <span class="wallet-chip" style="cursor:default; padding:0; border:none; background:none;">
+                <span class="net-dot"></span>
+                <span id="routeConnectedAddr" class="addr">0x0000…0000</span>
+              </span>
+            </div>
+            <span class="net" id="routeConnectedNet">—</span>
+          </div>
+
+          <div class="chain-select-row" id="assetSelectRow">
+            <button class="chain-select active" data-asset="SOL" type="button">
+              SOL
+            </button>
+            <button class="chain-select" data-asset="ETH" type="button">
+              ETH
+            </button>
+            <button class="chain-select" data-asset="BNB" type="button">
+              BNB
+            </button>
+          </div>
+
+          <div class="bridge-pair">
+            <div class="bridge-side" id="fromSide">Solana</div>
+            <button class="swap-dir-btn" id="swapDirBtn" type="button" aria-label="Reverse direction">⇅</button>
+            <div class="bridge-side" id="toSide">Robinhood Chain</div>
+          </div>
+
+          <div class="stake-input-row">
+            <input type="number" min="0" step="any" placeholder="0.0" id="bridgeAmountInput" inputmode="decimal" aria-label="Amount to bridge">
+            <span id="bridgeAmountSymbol" style="color:var(--text-dim); font-size:0.82rem;">SOL</span>
+          </div>
+
+          <div id="destAddressWrap" hidden style="margin-top:10px;">
+            <div class="stake-input-row">
+              <input type="text" id="destAddressInput" placeholder="destination address" aria-label="Destination address">
+            </div>
+            <div class="stake-balance-row"><span id="destAddressHint">cross-chain destination — paste the receiving address</span></div>
+          </div>
+
+          <div id="quoteArea" style="margin-top:14px;">
+            <p class="pending-note">connect a wallet to get a live quote</p>
+          </div>
+
+          <button class="btn btn-primary btn-full" id="routeActionBtn" data-open-wallet disabled>connect wallet to bridge</button>
+          <p class="pending-note" id="routeStatusNote" hidden></p>
+          <p class="pending-note">quotes and execution route through <strong style="color:var(--text-lo);">relay.link</strong> — RAMP does not custody funds in transit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">
+          <span class="brand-mark">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <path d="M31.6,20.1 H17.8 V79.9 H31.6" fill="none" stroke="#9c7a1f" stroke-width="10.9" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M68.4,20.1 H82.2 V79.9 H68.4" fill="none" stroke="#ffb020" stroke-width="10.9" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M36.2,50 H56.9 M47.7,36.2 L63.8,50 L47.7,63.8" fill="none" stroke="#ffb020" stroke-width="10.9" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+          RAMP<span class="cursor-blink">_</span>
+        </a>
+        <p>The RH Asset Migration Protocol — one-tap routing into Robinhood Chain from Solana, Ethereum and BNB Chain. Independent and community-built.</p>
+      </div>
+      <div class="footer-col">
+        <h4>protocol</h4>
+        <ul>
+          <li><a href="index.html#how">how it works</a></li>
+          <li><a href="bridge.html">supported networks</a></li>
+          <li><a href="index.html#security">security</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>$ramp</h4>
+        <ul>
+          <li><a href="stake.html">staking tiers</a></li>
+          <li><a href="index.html#faq">faq</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>community</h4>
+        <ul>
+          <li><a href="https://x.com/ramp_bridge">x / twitter</a></li>
+          <li><a href="#">github</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 RAMP Protocol. Not affiliated with Robinhood Markets, Inc.</p>
+      <p>built for SOL · ETH · BNB · RH</p>
+    </div>
+  </div>
+</footer>
+<script type="module">
+  // @solana/web3.js checks for window.Buffer at its own load time, so this
+  // has to resolve before that script runs — both are deferred (module
+  // scripts are deferred implicitly; the web3.js tag below is marked
+  // defer explicitly) so they run in this source order, after parsing,
+  // still well before any user interaction can call into either.
+  import { Buffer } from "https://cdn.jsdelivr.net/npm/buffer@6.0.3/+esm";
+  window.Buffer = Buffer;
+</script>
+<script defer src="https://cdn.jsdelivr.net/npm/@solana/web3.js@1.98.0/lib/index.iife.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

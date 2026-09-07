@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="favicon-32.png" sizes="32x32" type="image/png">
+  <link rel="icon" href="favicon-192.png" sizes="192x192" type="image/png">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <title>RAMP Protocol</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="atmosphere" aria-hidden="true"></div>
+
+<div class="modal-overlay" id="walletModal" hidden>
+  <div class="term modal-panel" role="dialog" aria-modal="true" aria-labelledby="walletModalTitle">
+    <div class="term-bar">
+      <span class="term-dot" style="background:var(--dot-red);"></span>
+      <span class="term-dot" style="background:var(--dot-amber);"></span>
+      <span class="term-dot" style="background:var(--dot-green);"></span>
+      <span class="term-title" id="walletModalTitle">connect-wallet.sh</span>
+      <button class="modal-close" id="walletModalClose" aria-label="Close" style="margin-left:auto;">✕</button>
+    </div>
+    <div class="term-body">
+      <button class="wallet-row" data-wallet="metamask">
+        <span class="wallet-row-main">
+          <span class="wallet-swatch" style="background:#f6851b;">MM</span>
+          <span>
+            <span class="wallet-name" style="display:block;">MetaMask</span>
+            <span class="wallet-sub">EVM · ETH / BNB</span>
+          </span>
+        </span>
+        <span class="wallet-status" data-status="metamask">checking…</span>
+      </button>
+      <button class="wallet-row" data-wallet="rabby">
+        <span class="wallet-row-main">
+          <span class="wallet-swatch" style="background:#7a7ffc;">RB</span>
+          <span>
+            <span class="wallet-name" style="display:block;">Rabby Wallet</span>
+            <span class="wallet-sub">EVM · ETH / BNB</span>
+          </span>
+        </span>
+        <span class="wallet-status" data-status="rabby">checking…</span>
+      </button>
+      <button class="wallet-row" data-wallet="phantom">
+        <span class="wallet-row-main">
+          <span class="wallet-swatch" style="background:#ab9ff2;">PH</span>
+          <span>
+            <span class="wallet-name" style="display:block;">Phantom</span>
+            <span class="wallet-sub">Solana</span>
+          </span>
+        </span>
+        <span class="wallet-status" data-status="phantom">checking…</span>
+      </button>
+    </div>
+    <div class="modal-foot">Connecting only shares your public address for a quote. RAMP requests a signature only when you press Bridge on the next screen — always review the transaction in your wallet before approving it.</div>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="wrap nav-row">
+    <a class="brand" href="index.html">
+      <span class="brand-mark">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <path d="M31.6,20.1 H17.8 V79.9 H31.6" fill="none" stroke="#9c7a1f" stroke-width="10.9" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M68.4,20.1 H82.2 V79.9 H68.4" fill="none" stroke="#ffb020" stroke-width="10.9" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M36.2,50 H56.9 M47.7,36.2 L63.8,50 L47.7,63.8" fill="none" stroke="#ffb020" stroke-width="10.9" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+      RAMP<span class="cursor-blink">_</span>
+    </a>
+    <ul class="nav-links">
+      <li><a href="bridge.html" data-nav="bridge">bridge</a></li>
+      <li><a href="stake.html" data-nav="stake">stake</a></li>
+      <li><a href="index.html#security" data-nav="security">security</a></li>
+      <li><a href="index.html#faq" data-nav="faq">faq</a></li>
+    </ul>
+    <div class="nav-cta">
+      <a class="btn btn-ghost btn-sm" href="index.html#how">how it works</a>
+      <button class="btn btn-primary btn-sm" id="navWalletBtn" data-open-wallet>connect wallet</button>
+    </div>
+  </div>
+</header>
+<main>
+  <section class="hero-poster">
+    <div class="hero-poster-bg" aria-hidden="true"></div>
+    <div class="hero-poster-fade" aria-hidden="true"></div>
+    <div class="wrap hero-poster-inner">
+      <span class="eyebrow">cross-chain router <span class="dot"></span></span>
+
+      <div class="hero-poster-grid">
+        <div>
+          <h1 class="stripe-h1">
+            <span class="stripe-layer L1" aria-hidden="true">Bridge from any chain to Robinhood Chain.</span>
+            <span class="stripe-layer L2" aria-hidden="true">Bridge from any chain to Robinhood Chain.</span>
+            <span class="stripe-layer L3" aria-hidden="true">Bridge from any chain to Robinhood Chain.</span>
+            <span class="stripe-layer L4" aria-hidden="true">Bridge from any chain to Robinhood Chain.</span>
+            <span class="stripe-layer front">Bridge from any chain to Robinhood Chain.</span>
+          </h1>
+          <p class="lede">Fast, low-fee routing from Solana, Ethereum and BNB Chain. Same assets. More opportunities.</p>
+          <div class="hero-ctas">
+            <a class="btn btn-primary" href="bridge.html">launch app</a>
+            <a class="btn btn-ghost" href="stake.html">stake $RAMP →</a>
+          </div>
+          <div class="hero-disclaimer">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 8v5"/><path d="M12 16h.01"/></svg>
+            <p>Independent, community-built project. Not affiliated with, endorsed by, or sponsored by Robinhood Markets, Inc.</p>
+          </div>
+        </div>
+        <div>
+          <div class="bracket-box">
+            <ul class="promise-list">
+              <li>
+                <span class="promise-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h13l-4-4"/><path d="M20 15H7l4 4"/></svg></span>
+                Same assets.
+              </li>
+              <li>
+                <span class="promise-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v13"/><path d="M18 12l-6 6-6-6"/></svg></span>
+                Lower fees.
+              </li>
+              <li>
+                <span class="promise-ic"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 7-2.7"/></svg></span>
+                A more open financial future.
+              </li>
+            </ul>
+            <div class="promise-chains">
+              <span class="promise-live"><span class="dot"></span>4 networks live</span>
+            </div>
+          </div>
+
+          <div class="contract-box">
+            <div class="contract-box-top">
+              <span class="contract-label">$RAMP contract</span>
+              <span class="contract-badge" id="contractBadge">example</span>
+            </div>
+            <code id="contractAddress">—</code>
+            <div class="contract-actions">
+              <button class="chip-btn" id="contractCopyBtn" type="button">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg>
+                <span class="chip-label">copy</span>
+              </button>
+              <a class="chip-btn" id="contractExplorerLink" href="#" target="_blank" rel="noopener">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h6v6"/><path d="M20 4 11 13"/><path d="M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5"/></svg>
+                explorer
+              </a>
+            </div>
+            <p class="contract-note" id="contractNote"></p>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-feature-row">
+        <div class="hero-feature">
+          <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14"/></svg></span>
+          <h4>Lower fees</h4>
+          <p>Stake $RAMP to cut what you pay on every route.</p>
+        </div>
+        <div class="hero-feature">
+          <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2 4 14h7l-1 8 9-12h-7l1-8z"/></svg></span>
+          <h4>Fast settlement</h4>
+          <p>Routes tuned for speed — most land in seconds.</p>
+        </div>
+        <div class="hero-feature">
+          <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg></span>
+          <h4>Non-custodial</h4>
+          <p>RAMP never holds your funds in transit.</p>
+        </div>
+        <div class="hero-feature">
+          <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 2.5 4 6 4 9s-1.5 6.5-4 9c-2.5-2.5-4-6-4-9s1.5-6.5 4-9z"/></svg></span>
+          <h4>Built for a global economy</h4>
+          <p>Onchain. Borderless. Open.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="how">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">routing-engine.sh</span>
+        <h2>Every chain in. One router. One chain out.</h2>
+        <p>RAMP doesn't run its own bridge or hold funds in transit — every route executes live through <strong style="color:var(--text-hi);">relay.link</strong>, which already has Robinhood Chain onboarded. More routes — LayerZero, Wormhole, deBridge, Across, CCIP, the canonical Arbitrum bridge — are being added so RAMP can start comparing them and picking whichever lands cheapest and fastest.</p>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal">
+          <span class="num">01_connect</span>
+          <h3>Connect &amp; pick a side</h3>
+          <p>Connect MetaMask, Rabby or Phantom, then pick which of Solana, Ethereum or BNB Chain you're bridging — and which direction, into or out of RH.</p>
+        </div>
+        <div class="step reveal">
+          <span class="num">02_quote</span>
+          <h3>RAMP fetches a live quote</h3>
+          <p>Enter an amount and RAMP pulls a real-time quote from relay.link: exact amount out, network + relayer fee, and time estimate.</p>
+        </div>
+        <div class="step reveal">
+          <span class="num">03_confirm</span>
+          <h3>One tap, one confirmation</h3>
+          <p>Approve the transaction in your wallet. RAMP sends exactly the calldata the quote returned and tracks it through to settlement on the other side.</p>
+        </div>
+      </div>
+
+      <div style="margin-top:40px; text-align:center;">
+        <a class="btn btn-primary" href="bridge.html">launch app →</a>
+      </div>
+    </div>
+  </section>
+  <section id="security">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">security.md</span>
+        <h2>Built to move value, not custody it.</h2>
+        <p>RAMP never takes custody of routed assets — it signs and forwards through the underlying bridges you'd otherwise use manually.</p>
+      </div>
+      <div class="security-grid">
+        <div class="security-item reveal">
+          <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2l8 4v6c0 5-3.5 8.5-8 10-4.5-1.5-8-5-8-10V6z"/></svg></span>
+          <h3>Non-custodial routing</h3>
+          <p>Transfers move through audited third-party bridges; RAMP's contracts never hold user funds at rest.</p>
+        </div>
+        <div class="security-item reveal">
+          <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg></span>
+          <h3>Multisig-controlled treasury</h3>
+          <p>Protocol and staking treasuries sit behind a 5-of-8 multisig with a 48-hour timelock on parameter changes.</p>
+        </div>
+        <div class="security-item reveal">
+          <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10"/><path d="M18 20V4"/><path d="M6 20v-4"/></svg></span>
+          <h3>Rate-limited routing</h3>
+          <p>Per-route transfer caps and anomaly monitoring slow large or unusual flows for manual review.</p>
+        </div>
+        <div class="security-item reveal">
+          <span class="ic"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16v6H4z"/><path d="M4 14h10v6H4z"/></svg></span>
+          <h3>Open-source contracts</h3>
+          <p>Router and staking contracts are published for public review ahead of each network's mainnet route.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="faq">
+    <div class="wrap">
+      <div class="section-head reveal">
+        <span class="eyebrow">faq.md</span>
+        <h2>Before you bridge.</h2>
+      </div>
+      <div class="faq-list">
+        <details class="faq-item reveal" open>
+          <summary><span class="q">is RAMP affiliated with Robinhood?</span><span class="plus">+</span></summary>
+          <p class="faq-a">No. RAMP (RH Asset Migration Protocol) is an independent, community-built project. "RH" refers to Robinhood Chain as a destination network — RAMP is not affiliated with, endorsed by, or sponsored by Robinhood Markets, Inc.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary><span class="q">which networks can I bridge between?</span><span class="plus">+</span></summary>
+          <p class="faq-a">RAMP currently routes transfers between Solana, Ethereum and BNB Chain into Robinhood Chain, with return routes back out to each source chain.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary><span class="q">what does staking $RAMP actually change?</span><span class="plus">+</span></summary>
+          <p class="faq-a">Staked $RAMP lowers the routing fee applied to your transfers and raises their priority when a route is congested. Fees step down across four tiers, from 0.30% unstaked to 0.05% at the Gold tier.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary><span class="q">does RAMP hold my funds while routing?</span><span class="plus">+</span></summary>
+          <p class="faq-a">No. RAMP signs and forwards transfers through the underlying bridge for the selected route — it does not take custody of assets in transit.</p>
+        </details>
+        <details class="faq-item reveal">
+          <summary><span class="q">how does the router pick a path?</span><span class="plus">+</span></summary>
+          <p class="faq-a">Right now every route executes through relay.link, the first network RAMP has integrated. As more bridges are added, each quote will score them live on liquidity depth, fees and confirmation time and execute the best one — still as a single transaction you approve once.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <a class="brand" href="index.html">
+          <span class="brand-mark">
+        <svg viewBox="0 0 100 100" aria-hidden="true">
+          <path d="M31.6,20.1 H17.8 V79.9 H31.6" fill="none" stroke="#9c7a1f" stroke-width="10.9" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M68.4,20.1 H82.2 V79.9 H68.4" fill="none" stroke="#ffb020" stroke-width="10.9" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M36.2,50 H56.9 M47.7,36.2 L63.8,50 L47.7,63.8" fill="none" stroke="#ffb020" stroke-width="10.9" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </span>
+          RAMP<span class="cursor-blink">_</span>
+        </a>
+        <p>The RH Asset Migration Protocol — one-tap routing into Robinhood Chain from Solana, Ethereum and BNB Chain. Independent and community-built.</p>
+      </div>
+      <div class="footer-col">
+        <h4>protocol</h4>
+        <ul>
+          <li><a href="index.html#how">how it works</a></li>
+          <li><a href="bridge.html">supported networks</a></li>
+          <li><a href="index.html#security">security</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>$ramp</h4>
+        <ul>
+          <li><a href="stake.html">staking tiers</a></li>
+          <li><a href="index.html#faq">faq</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>community</h4>
+        <ul>
+          <li><a href="https://x.com/ramp_bridge">x / twitter</a></li>
+          <li><a href="#">github</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 RAMP Protocol. Not affiliated with Robinhood Markets, Inc.</p>
+      <p>built for SOL · ETH · BNB · RH</p>
+    </div>
+  </div>
+</footer>
+<script src="app.js"></script>
+</body>
+</html>
