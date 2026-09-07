@@ -45,8 +45,8 @@
   // itself from `isLive`.
   var RAMP_TOKEN = {
     isLive: true,
-    address: "0x5fc5360d0400a0fd4f2af552add042d716f1d168",
-    symbol: "USDG",
+    address: "0x11111111111111111111111111",
+    symbol: "RAMP",
     chainName: "Robinhood Chain",
     explorerBase: "https://robinhoodchain.blockscout.com/address/"
   };
