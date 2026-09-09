@@ -45,10 +45,10 @@
   // itself from `isLive`.
   var RAMP_TOKEN = {
     isLive: true,
-    address: "0xdb3c36d8b0f56f4055525b15b9d37d20de7d1dc9",
+    address: "",
     symbol: "RAMP",
     chainName: "Robinhood Chain",
-    explorerBase: "https://robinhoodchain.blockscout.com/address/0xdb3c36d8b0f56f4055525b15b9d37d20de7d1dc9"
+    explorerBase: "https://robinhoodchain.blockscout.com/address/"
   };
 
   var discovered = {}; // rdns -> {info, provider}
